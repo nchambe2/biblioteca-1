@@ -1,10 +1,14 @@
-import com.thoughtworks.tw101.biblioteca.Application;
+import com.thoughtworks.tw101.biblioteca.Biblioteca;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Application applicationX = new Application(System.out);
-        applicationX.addBook("Pride and Prejudice");
-        applicationX.addBook("Head Start Java");
-        applicationX.start();
+        List<String> bookList = new ArrayList<>();
+        bookList.add("book 1");
+        bookList.add("book 2");
+        Biblioteca biblioteca = new Biblioteca(System.out, bookList);
+        biblioteca.start();
     }
 }
