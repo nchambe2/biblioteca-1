@@ -7,18 +7,21 @@ import java.util.List;
  * Created by toby on 4/26/16.
  */
 public class BookCatalog {
-    private List<String> bookList;
+    private List<Book> bookList;
     private PrintStream printStream;
 
-    public BookCatalog(List<String> bookList, PrintStream printStream) {
+    public BookCatalog(List<Book> bookList, PrintStream printStream) {
         this.bookList = bookList;
         this.printStream = printStream;
     }
 
 
     public void listBooks() {
-        for(String curBook : bookList) {
-            printStream.println(curBook);
+        String header = String.format("|%1$-15s |%2$-15s |%3$-15s", "Title", "Author", "Year Published");
+
+        printStream.println(header);
+        for(Book curBook : bookList) {
+            printStream.println(curBook.details());
         }
     }
 }

@@ -13,14 +13,14 @@ import static org.mockito.Mockito.*;
 public class BibliotecaTest {
 
 
-    private List<String> bookList;
+    private List<Book> bookList;
     private PrintStream printStream;
     private Biblioteca biblioteca;
 
     @Before
     public void setup(){
         printStream = mock(PrintStream.class);
-        bookList =  new ArrayList<>();
+        bookList =  new ArrayList<Book>();
         biblioteca = new Biblioteca(printStream, bookList);
     }
 

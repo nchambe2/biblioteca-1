@@ -8,9 +8,9 @@ public class Biblioteca {
     private BookCatalog bookCatalog;
     private PrintStream printStream;
 
-    public Biblioteca(PrintStream printStream, List<String> bookList) {
+    public Biblioteca(PrintStream printStream, List<Book> bookList) {
         this.printStream = printStream;
-        bookCatalog = new BookCatalog(bookList, printStream);
+        this.bookCatalog = new BookCatalog(bookList, printStream);
     }
 
     public void start() {
