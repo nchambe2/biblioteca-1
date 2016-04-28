@@ -27,7 +27,6 @@ public class BibliotecaTest {
 
     @Test
     public void shouldWelcomeUserWhenApplicationStarts() throws IOException {
-        userWillSelectAnyOption();
         biblioteca.start();
         
         verify(printStream).println(contains("Welcome"));
@@ -35,7 +34,6 @@ public class BibliotecaTest {
     
     @Test
     public void shouldShowMenuOptionsAfterWelcomeMessagePrints() throws IOException {
-        userWillSelectAnyOption();
         biblioteca.start();
         
         verify(menu).printMenu();
@@ -43,17 +41,12 @@ public class BibliotecaTest {
 
     @Test
     public void shouldRunSelectedMenuOptionWhenUserMakesASelection() throws IOException {
-        userWillSelectOptionOne();
         biblioteca.start();
 
-        verify(menu).runSelectedOption("1");
+        verify(menu).runSelectedOption();
     }
 
-    private void userWillSelectOptionOne() throws IOException {
-        when(menu.getUserInput()).thenReturn("1");
-    }
 
-    private void userWillSelectAnyOption() throws IOException {
-        when(menu.getUserInput()).thenReturn("");
-    }
+
+
 }

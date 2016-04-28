@@ -22,11 +22,6 @@ public class Menu {
         printStream.println("1. List Books");
     }
 
-    public String getUserInput() {
-        String userInput = getBufferedReaderInput();
-        return userInput;
-    }
-
     private String getBufferedReaderInput() {
         try {
             return bufferedReader.readLine();
@@ -36,14 +31,18 @@ public class Menu {
         return null;
     }
 
-    public void runSelectedOption(String selectedOption) {
-        if (selectedOption.equals("1")) {
-            bookCatalog.listBooks();
+    public void runSelectedOption() {
+        String userInput = getBufferedReaderInput();
+
+        while (!userInput.equals("1")) {
+            printStream.println("Select a valid option!");
+            userInput = getBufferedReaderInput();
         }
+
+        bookCatalog.listBooks();
+
     }
 
-    public void testingMethod(String something) {
-        return ;
+    public void quit() {
     }
-
 }

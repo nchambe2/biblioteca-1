@@ -2,17 +2,17 @@ package com.thoughtworks.tw101.biblioteca;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runners.Parameterized;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.contains;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MenuTest {
     private PrintStream printStream;
@@ -36,20 +36,40 @@ public class MenuTest {
     }
 
     @Test
-    public void shouldReturnOneWhenUserInputsOne() throws IOException {
+    public void shouldPrintBookListWhenOptionOneIsSelected() throws IOException {
         userWillSelectOptionOne();
-
-        assertThat(menu.getUserInput(), is("1"));
-    }
-
-    @Test
-    public void shouldPrintBookListWhenOptionOneIsSelected() {
-        menu.runSelectedOption("1");
+        menu.runSelectedOption();
 
         verify(bookCatalog).listBooks();
     }
 
     private void userWillSelectOptionOne() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
+    }
+
+    @Test
+    public void shouldDisplayInvalidMessageWhenInvalidInput() throws IOException {
+        userWillSelectInvalidThenValidOption();
+        menu.runSelectedOption();
+
+        verify(printStream).println(contains("Select a valid option!"));
+    }
+
+    private void userWillSelectInvalidThenValidOption() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("Hey Nicolette").thenReturn("1");
+    }
+
+    @Test
+    public void shouldQuitWhenOptionQuitIsSelected() throws IOException {
+        userSelectsQuitFromMenu();
+
+        menu.runSelectedOption();
+
+        verify(menu).quit();
+
+    }
+
+    private void userSelectsQuitFromMenu() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("0");
     }
 }

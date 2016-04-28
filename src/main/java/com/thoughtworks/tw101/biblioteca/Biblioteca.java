@@ -17,8 +17,7 @@ public class Biblioteca {
     public void start() {
         printWelcomeMessage();
         menu.printMenu();
-        String userInput = menu.getUserInput();
-        menu.runSelectedOption(userInput);
+        menu.runSelectedOption();
     }
 
     private void printWelcomeMessage() {
