@@ -1,21 +1,24 @@
 package com.thoughtworks.tw101.biblioteca;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
 
 public class Biblioteca {
 
-    private BookCatalog bookCatalog;
     private PrintStream printStream;
+    private Menu menu;
 
-    public Biblioteca(PrintStream printStream, List<Book> bookList) {
+    public Biblioteca(PrintStream printStream, Menu menu) {
         this.printStream = printStream;
-        this.bookCatalog = new BookCatalog(bookList, printStream);
+        this.menu = menu;
     }
 
     public void start() {
         printWelcomeMessage();
-        bookCatalog.listBooks();
+        menu.printMenu();
+        String userInput = menu.getUserInput();
+        menu.runSelectedOption(userInput);
     }
 
     private void printWelcomeMessage() {
