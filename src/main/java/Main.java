@@ -1,7 +1,4 @@
-import com.thoughtworks.tw101.biblioteca.Biblioteca;
-import com.thoughtworks.tw101.biblioteca.Book;
-import com.thoughtworks.tw101.biblioteca.BookCatalog;
-import com.thoughtworks.tw101.biblioteca.Menu;
+import com.thoughtworks.tw101.biblioteca.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,8 +12,11 @@ public class Main {
         bookList.add(new Book("The Jungle Book", "Some Person", "1967"));
         BookCatalog bookCatalog = new BookCatalog(bookList, System.out);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        Menu menu = new Menu(System.out, bufferedReader, bookCatalog);
-        Biblioteca biblioteca = new Biblioteca(System.out, menu);
-        biblioteca.start();
+        MenuPrompter prompter = new MenuPrompter(bufferedReader);
+        MenuValidator validator = new MenuValidator();
+        Menu menu = new Menu(System.out, bookCatalog, prompter);
+
+        Application application = new Application(System.out, menu, prompter, validator);
+        application.start();
     }
 }

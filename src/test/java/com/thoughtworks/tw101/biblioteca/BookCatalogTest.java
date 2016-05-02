@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.*;
@@ -34,9 +35,9 @@ public class BookCatalogTest {
         when(book1.details()).thenReturn("Author1 Year1");
         Book book2 = mock(Book.class);
         when(book2.details()).thenReturn("Author2 Year2");
-
         bookList.add(book1);
         bookList.add(book2);
+
         bookCatalog.listBooks();
 
         verify(printStream).println(contains("Author1 Year1"));
@@ -61,6 +62,24 @@ public class BookCatalogTest {
     public void shouldPrintYearPublishedColumn(){
         bookCatalog.listBooks();
         verify(printStream).println(contains("Year Published"));
+    }
+
+    @Test
+    public void shouldNotPrintCheckedOutBooks() {
+        Book book0 = mock(Book.class);
+        when(book0.details()).thenReturn("Author1 Year1");
+        Book book1 = mock(Book.class);
+        when(book1.details()).thenReturn("CHECKED");
+        bookList.add(book0);
+        bookList.add(book1);
+
+
+        bookCatalog.checkOut(1);
+        bookCatalog.listBooks();
+
+        verify(printStream).println(not(contains("CHECKED")));
+        verify(printStream).println(contains("Author1 Year1"));
+
     }
 
 

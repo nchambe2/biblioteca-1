@@ -2,12 +2,10 @@ package com.thoughtworks.tw101.biblioteca;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -19,13 +17,15 @@ public class MenuTest {
     private BufferedReader bufferedReader;
     private BookCatalog bookCatalog;
     private Menu menu;
+    private MenuPrompter menuPrompter;
 
     @Before
     public void setUp() {
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
         bookCatalog = mock(BookCatalog.class);
-        menu = new Menu(printStream, bufferedReader, bookCatalog);
+        menuPrompter = mock(MenuPrompter.class);
+        menu = new Menu(printStream, bookCatalog, menuPrompter);
     }
 
     @Test
@@ -38,38 +38,28 @@ public class MenuTest {
     @Test
     public void shouldPrintBookListWhenOptionOneIsSelected() throws IOException {
         userWillSelectOptionOne();
-        menu.runSelectedOption();
+        menu.runSelectedOption("1");
 
         verify(bookCatalog).listBooks();
+    }
+
+    @Test
+    public void shouldIncludeCheckOutAsMenuOption() {
+        menu.printMenu();
+
+        verify(printStream).println(contains("Checkout Book"));
+    }
+
+
+
+
+    private void userWillSelectOptionTwo() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("2");
     }
 
     private void userWillSelectOptionOne() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
     }
 
-    @Test
-    public void shouldDisplayInvalidMessageWhenInvalidInput() throws IOException {
-        userWillSelectInvalidThenValidOption();
-        menu.runSelectedOption();
 
-        verify(printStream).println(contains("Select a valid option!"));
-    }
-
-    private void userWillSelectInvalidThenValidOption() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("Hey Nicolette").thenReturn("1");
-    }
-
-    @Test
-    public void shouldQuitWhenOptionQuitIsSelected() throws IOException {
-        userSelectsQuitFromMenu();
-
-        menu.runSelectedOption();
-
-        verify(menu).quit();
-
-    }
-
-    private void userSelectsQuitFromMenu() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("0");
-    }
 }

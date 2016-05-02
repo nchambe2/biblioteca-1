@@ -8,20 +8,20 @@ public class Book {
     private final String title;
     private final String author;
     private final String yearPublished;
+    private boolean checkedOut;
 
     public Book(String title, String author, String yearPublished) {
 
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;
+        this.checkedOut = false;
     }
-
 
 
     public String details(){
         String detailString = String.format("|%1$-15s |%2$-15s |%3$-15s", title, author, yearPublished);
         return detailString;
     }
-
 
 }
